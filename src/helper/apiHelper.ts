@@ -10,7 +10,7 @@ export class ApiHelper {
     this.requestContext = await request.newContext({ baseURL: this.baseUrl });
   }
 
-  async createUser(token: string): Promise<APIResponse> {
+  async createUser(): Promise<APIResponse> {
     const userData = {
       firstName: this.generateRandomString(6),
       lastName: this.generateRandomString(6),
@@ -20,9 +20,9 @@ export class ApiHelper {
 
     return this.requestContext.post('/users', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: 'Bearer {{token}}',
         'Content-Type': 'application/json',
-        Cookie: `token=${token}`,
+        Cookie: 'token={{token}}',
       },
       data: userData,
     });

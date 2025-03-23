@@ -5,7 +5,7 @@ import { ApiHelper } from '../src/helper/apiHelper';
 test.only('should login successfully', async({page}) => {
     const apiHelper = new ApiHelper();
     await apiHelper.init();
-    const response = await apiHelper.createUser('{{token}}');
+    const response = await apiHelper.createUser();
     const userData = await response.json();
     const loginPage = new LoginPage(page);
     await loginPage.go();
