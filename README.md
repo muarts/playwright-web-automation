@@ -21,3 +21,39 @@ test('should login successfully', async({page}) => {
     expect(await contactListPage.isAddContactButtonDisplayed()).toBe(true);
 })
 ```
+
+Okay, we’ve tested the login feature, and it works. What’s next? How about logout?
+
+To test the logout functionality, we first need to log in. In fact, many features of a web application require a logged-in user. If we log in through the UI every time we run a test, execution time will increase significantly.
+
+To optimize this, we need a way to bypass the login step using a tailored approach specific to the application under test. Here’s an example:
+
+```typescript
+export async function byPassLogin(page: Page, token: string) {
+    await page.context().addCookies([
+        {
+            name: 'token',
+            value: token,
+            domain: DOMAIN,
+            path: '/'
+        }
+    ])
+}
+```
+
+In our test, we first create a user using the API. Then, we extract the token from the response and add it to the cookies. With this setup, we are ready to test the logout feature—nothing more. By isolating the feature under test, we also reduce test execution time.
+
+```typescript
+test('should logout successfully', async({page}) => {
+    const apiHelper = new ApiHelper();
+    await apiHelper.init();
+    const response = await apiHelper.createUser();
+    const userData = await response.json();
+    await byPassLogin(page, userData.token);
+    const contactListPage = new ContactListPage(page);
+    await contactListPage.go();
+    const loginPage = await contactListPage.logout();
+
+    expect(await loginPage.isSignUpButtonDisplayed()).toBe(true);
+})
+```
