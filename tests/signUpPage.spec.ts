@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { SignUpPage } from '../src/pages/sign-up.page';
 import { generateRandomString } from '../src/helper/util';
-import { INVALID_PASSWORD_ERROR, INVALID_EMAIL_ERROR } from '../src/testdata/error-messages';
+import { INVALID_PASSWORD_ERROR, INVALID_EMAIL_ERROR, EMAIL_ADDRESS_ALREADY_IN_USE_ERROR } from '../src/testdata/error-messages';
 import { EMPTY_FIELDS_ERROR } from '../src/testdata/error-messages';
 import { INVALID_EMAIL_DATA } from '../src/testdata/parameterized-data';
+import { ApiHelper } from '../src/helper/apiHelper';
 
 test('should sign up successfully', async({page}) => {
     const signUpPage = new SignUpPage(page);
@@ -68,4 +69,20 @@ test.describe.parallel('Invalid email tests', () => {
       });
     });
   });
-  
+
+test('should get an email is already in use error', async({page}) => {
+    const apiHelper = new ApiHelper();
+    await apiHelper.init();
+    const response = await apiHelper.createUser();
+    const userData = await response.json();
+    const signUpPage = new SignUpPage(page);
+    await signUpPage.go();
+    await signUpPage.signUp(
+        generateRandomString(7), 
+        generateRandomString(7), 
+        userData.user.email, 
+        generateRandomString(7));
+
+    expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
+    expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(EMAIL_ADDRESS_ALREADY_IN_USE_ERROR);
+})
