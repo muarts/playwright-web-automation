@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { SignUpPage } from '../src/pages/sign-up.page';
 import { generateRandomString } from '../src/helper/util';
-import { INVALID_PASSWORD_ERROR } from '../src/testdata/error-messages';
+import { INVALID_PASSWORD_ERROR, INVALID_EMAIL_ERROR } from '../src/testdata/error-messages';
 import { EMPTY_FIELDS_ERROR } from '../src/testdata/error-messages';
+import { INVALID_EMAIL_DATA } from '../src/testdata/parameterized-data';
 
 test('should sign up successfully', async({page}) => {
     const signUpPage = new SignUpPage(page);
@@ -50,3 +51,21 @@ test('should navigate to the login page with cancel button successfully', async(
 
     expect(await loginPage.isSignUpButtonDisplayed()).toBe(true);
 })
+
+test.describe.parallel('Invalid email tests', () => {
+    INVALID_EMAIL_DATA.forEach(({ email }) => {
+      test(`should get and error when email is like ${email}`, async ({ page }) => {
+        const signUpPage = new SignUpPage(page);
+        await signUpPage.go();
+        const contactListPage = await signUpPage.signUp(
+            generateRandomString(7), 
+            generateRandomString(7), 
+            email, 
+            generateRandomString(7));
+
+        expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
+        expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(INVALID_EMAIL_ERROR);
+      });
+    });
+  });
+  
