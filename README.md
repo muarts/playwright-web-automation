@@ -1,0 +1,1 @@
+# Web automation using Playwright and Typescript with POM approach
