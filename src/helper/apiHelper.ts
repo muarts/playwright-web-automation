@@ -1,14 +1,14 @@
 import { request, APIRequestContext, APIResponse } from '@playwright/test';
 import { generateRandomString } from './util';
+import { BASE_URL } from '../testdata/common-constants';
 
 export class ApiHelper {
   private requestContext: APIRequestContext;
-  private baseUrl: string = 'https://thinking-tester-contact-list.herokuapp.com';
-
+  
   constructor() {}
 
   async init() {
-    this.requestContext = await request.newContext({ baseURL: this.baseUrl });
+    this.requestContext = await request.newContext({ baseURL: BASE_URL });
   }
 
   async createUser(): Promise<APIResponse> {
