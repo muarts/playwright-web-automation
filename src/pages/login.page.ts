@@ -7,6 +7,7 @@ export class LoginPage {
     readonly passwordInput: Locator;
     readonly submitButton: Locator;
     readonly loginError: Locator;
+    readonly signUpButton: Locator;
 
     constructor (page: Page) {
         this.page = page;
@@ -14,6 +15,7 @@ export class LoginPage {
         this.passwordInput = page.locator('[id="password"]');
         this.submitButton = page.locator('[id="submit"]');
         this.loginError = page.locator('[id="error"]');
+        this.signUpButton = page.locator('[id="signup"]');
     }
 
     async go () {
@@ -34,5 +36,9 @@ export class LoginPage {
     async isLoginErrorDisplayed(): Promise<boolean> {
         return await this.loginError.isVisible();
     } 
+
+    async isSignUpButtonDisplayed(): Promise<boolean> {
+        return await this.signUpButton.isVisible();
+    }
 
 }

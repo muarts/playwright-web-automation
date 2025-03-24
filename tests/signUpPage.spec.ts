@@ -42,3 +42,11 @@ test('should get an error when add form is missing fields', async({page}) => {
     expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
     expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(EMPTY_FIELDS_ERROR);
 })
+
+test('should navigate to the login page with cancel button successfully', async({page}) => {
+    const signUpPage = new SignUpPage(page);
+    await signUpPage.go();
+    const loginPage = await signUpPage.clickCancelButton();
+
+    expect(await loginPage.isSignUpButtonDisplayed()).toBe(true);
+})

@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { ContactListPage } from './contact-list.page';
+import { LoginPage } from './login.page';
 
 export class SignUpPage {
     readonly page: Page;
@@ -10,6 +11,7 @@ export class SignUpPage {
     readonly passwordInput: Locator;
     readonly submitButton: Locator;
     readonly signUpError: Locator;
+    readonly cancelButton: Locator;
 
     constructor (page: Page) {
         this.page = page;
@@ -20,6 +22,7 @@ export class SignUpPage {
         this.passwordInput = page.locator('[id="password"]');
         this.submitButton = page.locator('[id="submit"]');
         this.signUpError = page.locator('[id="error"]');
+        this.cancelButton = page.locator('[id="cancel"]');
     }
 
     async go () {
@@ -45,6 +48,12 @@ export class SignUpPage {
     
     async getTextOfSignUpError() : Promise<string | null> {
         return await this.signUpError.textContent();
+    }
+
+    async clickCancelButton() {
+        await this.cancelButton.click();
+        await this.page.waitForLoadState('networkidle');
+        return new LoginPage(this.page);
     }
 
 }
