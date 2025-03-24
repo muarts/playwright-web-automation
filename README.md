@@ -57,3 +57,9 @@ test('should logout successfully', async({page}) => {
     expect(await loginPage.isSignUpButtonDisplayed()).toBe(true);
 })
 ```
+
+## Run tests and view report
+
+Run tests > `npx playwright test`
+
+View report > `npx playwright show-report`
