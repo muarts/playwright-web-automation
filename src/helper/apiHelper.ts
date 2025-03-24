@@ -1,4 +1,5 @@
 import { request, APIRequestContext, APIResponse } from '@playwright/test';
+import { generateRandomString } from './util';
 
 export class ApiHelper {
   private requestContext: APIRequestContext;
@@ -12,9 +13,9 @@ export class ApiHelper {
 
   async createUser(): Promise<APIResponse> {
     const userData = {
-      firstName: this.generateRandomString(6),
-      lastName: this.generateRandomString(6),
-      email: `${this.generateRandomString(8)}@fake.com`,
+      firstName: generateRandomString(6),
+      lastName: generateRandomString(6),
+      email: `${generateRandomString(8)}@fake.com`,
       password: 'password',
     };
 
@@ -26,11 +27,6 @@ export class ApiHelper {
       },
       data: userData,
     });
-  }
-
-  private generateRandomString(length: number): string {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
   }
 
   async close() {

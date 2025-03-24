@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { LoginPage } from '../src/pages/login.page';
 import { ApiHelper } from '../src/helper/apiHelper';
 
-test.only('should login successfully', async({page}) => {
+test('should login successfully', async({page}) => {
     const apiHelper = new ApiHelper();
     await apiHelper.init();
     const response = await apiHelper.createUser();
@@ -14,7 +14,7 @@ test.only('should login successfully', async({page}) => {
     expect(await contactListPage.isAddContactButtonDisplayed());
 })
 
-test.only('should get an login error', async({page}) => {
+test('should get an login error', async({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.go();
     await loginPage.login('email', 'password');
