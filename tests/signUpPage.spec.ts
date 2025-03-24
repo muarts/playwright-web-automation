@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { SignUpPage } from '../src/pages/sign-up.page';
 import { generateRandomString } from '../src/helper/util';
 import { INVALID_PASSWORD_ERROR } from '../src/testdata/error-messages';
+import { EMPTY_FIELDS_ERROR } from '../src/testdata/error-messages';
 
 test('should sign up successfully', async({page}) => {
     const signUpPage = new SignUpPage(page);
@@ -27,4 +28,17 @@ test('should get an error when password is less than seven characters', async({p
 
     expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
     expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(INVALID_PASSWORD_ERROR(invalidPassword));
+})
+
+test('should get an error when add form is missing fields', async({page}) => {
+    const signUpPage = new SignUpPage(page);
+    await signUpPage.go();
+    await signUpPage.signUp(
+        '', 
+        '', 
+        '', 
+        '');
+
+    expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
+    expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(EMPTY_FIELDS_ERROR);
 })
