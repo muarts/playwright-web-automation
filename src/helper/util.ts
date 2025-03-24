@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { BASE_URL } from "../testdata/common-constants";
+import { DOMAIN } from "../testdata/common-constants";
 
 export function generateRandomString(length: number): string {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -11,7 +11,7 @@ export async function byPassLogin(page: Page, token: string) {
         {
             name: 'token',
             value: token,
-            domain: 'thinking-tester-contact-list.herokuapp.com',
+            domain: DOMAIN,
             path: '/'
         }
     ])
