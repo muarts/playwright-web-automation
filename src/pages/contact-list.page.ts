@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { LoginPage } from './login.page';
 
 export class ContactListPage {
     readonly page: Page;
@@ -16,6 +17,12 @@ export class ContactListPage {
           this.page.goto('/contactList'),
           this.addContactButton.waitFor({ state: 'visible' })
         ]);
+    }
+
+    async logout() {
+        await this.logoutButton.click();
+        await this.page.waitForLoadState('networkidle');
+        return new LoginPage(this.page);
     }
 
     async isAddContactButtonDisplayed(): Promise<boolean> {
