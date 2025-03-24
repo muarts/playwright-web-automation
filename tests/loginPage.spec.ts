@@ -11,7 +11,7 @@ test('should login successfully', async({page}) => {
     await loginPage.go();
     const contactListPage = await loginPage.login(userData.user.email, 'password');
 
-    expect(await contactListPage.isAddContactButtonDisplayed());
+    expect(await contactListPage.isAddContactButtonDisplayed()).toBe(true);
 })
 
 test('should get an login error', async({page}) => {
@@ -19,5 +19,5 @@ test('should get an login error', async({page}) => {
     await loginPage.go();
     await loginPage.login('email', 'password');
 
-    expect(await loginPage.isLoginErrorDisplayed());
+    expect(await loginPage.isLoginErrorDisplayed()).toBe(true);
 })

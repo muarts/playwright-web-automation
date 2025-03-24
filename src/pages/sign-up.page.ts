@@ -35,11 +35,16 @@ export class SignUpPage {
         await this.emailInput.fill(email);
         await this.passwordInput.fill(password);
         await this.submitButton.click();
+        await this.page.waitForLoadState('networkidle');
         return new ContactListPage(this.page);
     }
 
     async isSignUpErrorDisplayed(): Promise<boolean> {
         return await this.signUpError.isVisible();
-    } 
+    }
+    
+    async getTextOfSignUpError() : Promise<string | null> {
+        return await this.signUpError.textContent();
+    }
 
 }

@@ -27,6 +27,7 @@ export class LoginPage {
         await this.emailInput.fill(email);
         await this.passwordInput.fill(password);
         await this.submitButton.click();
+        await this.page.waitForLoadState('networkidle');
         return new ContactListPage(this.page);
     }
 
