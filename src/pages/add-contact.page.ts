@@ -17,6 +17,7 @@ export class AddContactPage {
     readonly countryInput: Locator;
     readonly submitButton: Locator;
     readonly cancelButton: Locator;
+    readonly errorMessage: Locator;
 
     constructor (page: Page) {
         this.page = page;
@@ -34,6 +35,7 @@ export class AddContactPage {
         this.countryInput = page.locator('[id="country"]');
         this.submitButton = page.locator('[id="submit"]');
         this.cancelButton = page.locator('[id="cancel"]');
+        this.errorMessage = page.locator('[id="error"]');
     }
 
     async go () {
@@ -51,6 +53,19 @@ export class AddContactPage {
 
     async isDateOfBirthInputDisplayed(): Promise<boolean> {
         return await this.dateOfBirthInput.isVisible();
+    }
+
+    async clickSubmitButton() {
+        return await this.submitButton.click();
+    }
+
+    async isErrorMessageDisplayed() {
+        await this.errorMessage.waitFor({ state: 'visible' });
+        return await this.errorMessage.isVisible();
+    }
+
+    async getTextOfTheErrorMessage() {
+        return await this.errorMessage.textContent();
     }
 
 }
