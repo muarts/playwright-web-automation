@@ -1,6 +1,6 @@
 import { request, APIRequestContext, APIResponse } from '@playwright/test';
 import { generateRandomString } from './util';
-import { BASE_URL } from '../testdata/common-constants';
+import { BASE_URL, VALID_PASSWORD } from '../testdata/common-constants';
 
 export class ApiHelper {
   private requestContext: APIRequestContext;
@@ -16,7 +16,7 @@ export class ApiHelper {
       firstName: generateRandomString(6),
       lastName: generateRandomString(6),
       email: `${generateRandomString(8)}@fake.com`,
-      password: 'password',
+      password: VALID_PASSWORD,
     };
 
     return this.requestContext.post('/users', {
