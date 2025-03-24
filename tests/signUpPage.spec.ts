@@ -57,7 +57,7 @@ test.describe.parallel('Invalid email tests', () => {
       test(`should get and error when email is like ${email}`, async ({ page }) => {
         const signUpPage = new SignUpPage(page);
         await signUpPage.go();
-        const contactListPage = await signUpPage.signUp(
+        await signUpPage.signUp(
             generateRandomString(7), 
             generateRandomString(7), 
             email, 
