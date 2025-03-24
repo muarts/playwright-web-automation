@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { SignUpPage } from '../src/pages/sign-up.page';
 import { generateRandomString } from '../src/helper/util';
+import { INVALID_PASSWORD_ERROR } from '../src/testdata/error-messages';
 
 test('should sign up successfully', async({page}) => {
     const signUpPage = new SignUpPage(page);
@@ -25,5 +26,5 @@ test('should get an error when password is less than seven characters', async({p
         invalidPassword);
 
     expect(await signUpPage.isSignUpErrorDisplayed()).toBe(true);
-    expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(`User validation failed: password: Path \`password\` (\`${invalidPassword}\`) is shorter than the minimum allowed length (7).`)
+    expect(await signUpPage.getTextOfSignUpError()).toStrictEqual(INVALID_PASSWORD_ERROR(invalidPassword));
 })
