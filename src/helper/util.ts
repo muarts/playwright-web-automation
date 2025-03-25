@@ -1,5 +1,6 @@
 import { Page } from "@playwright/test";
 import { DOMAIN } from "../testdata/common-constants";
+import ContactInfo from "../testdata/contact-info";
 
 export function generateRandomString(length: number): string {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -15,4 +16,10 @@ export async function byPassLogin(page: Page, token: string) {
             path: '/'
         }
     ])
+}
+
+export async function getContactInfo() {
+    return ContactInfo.builder()
+        .setFirstName(generateRandomString(7))
+        .setLastName(generateRandomString(7));
 }

@@ -1,5 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { LoginPage } from './login.page';
+import ContactInfo from '../testdata/contact-info';
+import { ContactListPage } from './contact-list.page';
 
 export class AddContactPage {
     readonly page: Page;
@@ -67,5 +69,13 @@ export class AddContactPage {
     async getTextOfTheErrorMessage() {
         return await this.errorMessage.textContent();
     }
+
+    async addNewContactInfo(contactInfo: ContactInfo) {
+        await this.firstNameInput.fill(contactInfo.getFirstName());
+        await this.lastNameUnput.fill(contactInfo.getLastName());
+        await this.clickSubmitButton();
+        await this.page.waitForLoadState('networkidle');
+        return new ContactListPage(this.page);
+    } 
 
 }
