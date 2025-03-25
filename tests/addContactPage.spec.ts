@@ -27,11 +27,11 @@ test('should add new contact with first name and last name successfully', async(
     const userData = await response.json();
     await byPassLogin(page, userData.token);
     const addContactPage = new AddContactPage(page);
-    const contactInfToAdd = await getContactInfo();
-    const fullNameOfContactInfoToAdd = contactInfToAdd.getFirstName() +  ' ' + contactInfToAdd.getLastName();
     await addContactPage.go();
+    const contactInfToAdd = await getContactInfo();
+    const fullNameOfTheContactInfoToAdd = contactInfToAdd.getFirstName() + ' ' + contactInfToAdd.getLastName();
     const contactListPage = await addContactPage.addNewContactInfo(contactInfToAdd);
 
-    expect(await contactListPage.getTextOfContactTableRow()).toContain(fullNameOfContactInfoToAdd);
+    expect(await contactListPage.getTextOfContactTableRow()).toContain(fullNameOfTheContactInfoToAdd);
 })
 
