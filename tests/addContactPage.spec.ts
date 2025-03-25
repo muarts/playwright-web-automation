@@ -29,9 +29,9 @@ test('should add new contact with first name and last name successfully', async(
     const addContactPage = new AddContactPage(page);
     await addContactPage.go();
     const contactInfToAdd = await getContactInfo();
-    const fullNameOfTheContactInfoToAdd = contactInfToAdd.getFirstName() + ' ' + contactInfToAdd.getLastName();
+    const fullNameOfContactInfoToAdd = contactInfToAdd.getFirstName() + ' ' + contactInfToAdd.getLastName();
     const contactListPage = await addContactPage.addNewContactInfo(contactInfToAdd);
 
-    expect(await contactListPage.getTextOfContactTableRow()).toContain(fullNameOfTheContactInfoToAdd);
+    expect(await contactListPage.getTextOfContactTableRow()).toContain(fullNameOfContactInfoToAdd);
 })
 
